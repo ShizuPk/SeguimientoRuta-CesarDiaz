@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "818326538000",
+    "project_id": "seguimientoruta-cesardiaz",
+    "storage_bucket": "seguimientoruta-cesardiaz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818326538000:android:4756363c2b5373ccaf8795",
+        "android_client_info": {
+          "package_name": "com.databit.seguimientoruta_cesardiaz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqkeqvm5ffnbXo2z523akGw_NcUK__nWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
