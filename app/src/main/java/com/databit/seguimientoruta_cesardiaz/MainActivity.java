@@ -53,11 +53,9 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(MainActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
 
-                        // Ir al menú después del inicio de sesión
                         startActivity(new Intent(MainActivity.this, MenuActivity.class));
                         finish(); // Opcional: cerrar la actividad actual
                     } else {
-                        // Si falla el inicio de sesión, muestra un mensaje al usuario.
                         Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                     }
                 });
