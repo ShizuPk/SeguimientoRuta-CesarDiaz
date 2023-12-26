@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Registro exitoso
                             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                            // Aquí puedes agregar la lógica adicional después del registro exitoso
+
 
                             // Ir a la actividad de inicio de sesión
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
