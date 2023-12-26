@@ -198,17 +198,29 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
         @Override
         public void onLocationResult(LocationResult locationResult) {
             if (locationResult != null) {
-                Location location = locationResult.getLastLocation();
-                routeLocations.add(location);
-                updateCurrentLocationMarker(location);
+                for (Location location : locationResult.getLocations()) {
+                    // Añadir ubicación a routeLocations para cálculo de distancia y dibujo en mapa
+                    routeLocations.add(location);
+                    updateCurrentLocationMarker(location);
 
-                if (isRecording) {
-                    routeUtils.drawRouteOnMap(location.getLatitude(), location.getLongitude());
-                    saveLocationToFirebase(location);
+                    // Convertir la ubicación a FirebaseLatLng y añadir a currentRoute
+                    FirebaseLatLng firebaseLatLng = new FirebaseLatLng(location.getLatitude(), location.getLongitude());
+                    if (currentRoute != null && currentRoute.getUbicaciones() != null) {
+                        currentRoute.getUbicaciones().add(firebaseLatLng);
+                    }
+
+                    // Dibujo en el mapa y otras operaciones
+                    if (isRecording) {
+                        routeUtils.drawRouteOnMap(location.getLatitude(), location.getLongitude());
+                        saveLocationToFirebase(location);
+                    }
                 }
             }
         }
     };
+
+
+
 
     public void onStartRouteClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -319,7 +331,7 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
 
             this.routeName = routeName;
             this.startTime = System.currentTimeMillis();
-            handler.postDelayed(updateTask, 3000);
+            handler.postDelayed(updateTask, 5000);
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
@@ -355,7 +367,7 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
                 }
 
                 // Re-programa el runnable para ejecutarse después de 10 segundos
-                handler.postDelayed(this, 3000);
+                handler.postDelayed(this, 5000);
             }
         }
     };
@@ -428,13 +440,29 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
 
     public void onNewRouteClick(View view) {
         if (isRecording) {
-            // Si ya se está grabando, detén la grabación antes de comenzar una nueva
+            // Detén la grabación antes de empezar una nueva
             stopRecording();
             ((Button) findViewById(R.id.btnStartRecording)).setText("Comenzar Grabación");
         }
+
         // Mostrar diálogo para ingresar el nombre de la nueva ruta
-        showDialogToStartRoute();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Nombre de la Ruta");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String routeName = input.getText().toString();
+            startRecording(routeName);  // Comienza la grabación con el nombre de la ruta
+            ((Button) findViewById(R.id.btnStartRecording)).setText("Detener Grabación");
+        });
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+
+        builder.show();
     }
+
 
 
     private void showDialogToStartRoute() {
@@ -521,7 +549,6 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(currentLatLng));
     }
 
-
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
@@ -569,7 +596,6 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-
     private void saveLocationToFirebase(Location location) {
         FirebaseLatLng firebaseLatLng = new FirebaseLatLng(location.getLatitude(), location.getLongitude());
         String key = locationDatabase.push().getKey();
@@ -578,11 +604,9 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
-
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -622,11 +646,9 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
                         // Actualizar UI, mostrar confirmación...
                     })
                     .addOnFailureListener(e -> {
-                        // Manejar el error...
                     });
         }
     }
-
 
     private void mostrarDetallesRuta(String routeId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("rutas");
@@ -642,10 +664,8 @@ public class StartRouteActivity extends AppCompatActivity implements OnMapReadyC
                     duracionTextView.setText("Duración: " + (ruta.getDuracion() / 1000) + " seg");
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Manejar el error
             }
         });
     }

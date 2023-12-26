@@ -27,10 +27,18 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RouteModel route = routeList.get(position);
         holder.routeName.setText(route.getNombre());
-        // Si tienes más datos en RouteModel, como distancia y duración, puedes configurarlos aquí.
-        // Ejemplo:
-        // holder.routeDistance.setText("Distancia: " + route.getDistancia() + " m");
-        // holder.routeDuration.setText("Duración: " + route.getDuracion() + " min");
+        holder.routeDistance.setText("Distancia: " + route.getDistancia() + " m");
+        holder.routeDuration.setText("Duración: " + route.getDuracion() + " min");
+
+        // Comprobando si hay ubicaciones disponibles
+        if (!route.getUbicaciones().isEmpty()) {
+            FirebaseLatLng firstLocation = route.getUbicaciones().get(0);
+            holder.routeLat.setText("Latitud: " + firstLocation.latitude);
+            holder.routeLng.setText("Longitud: " + firstLocation.longitude);
+        } else {
+            holder.routeLat.setText("Latitud: No disponible");
+            holder.routeLng.setText("Longitud: No disponible");
+        }
     }
 
     @Override
@@ -40,16 +48,18 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView routeName;
-        // Agrega más TextViews si tienes más datos para mostrar, por ejemplo:
-        // TextView routeDistance;
-        // TextView routeDuration;
+        TextView routeDistance;
+        TextView routeDuration;
+        TextView routeLat;
+        TextView routeLng;
 
         public ViewHolder(View itemView) {
             super(itemView);
             routeName = itemView.findViewById(R.id.routeName);
-            // Inicializa aquí otras vistas si es necesario, por ejemplo:
-            // routeDistance = itemView.findViewById(R.id.routeDistance);
-            // routeDuration = itemView.findViewById(R.id.routeDuration);
+            routeDistance = itemView.findViewById(R.id.routeDistance);
+            routeDuration = itemView.findViewById(R.id.routeDuration);
+            routeLat = itemView.findViewById(R.id.routeLat);
+            routeLng = itemView.findViewById(R.id.routeLng);
         }
     }
 }

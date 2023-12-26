@@ -2,6 +2,7 @@ package com.databit.seguimientoruta_cesardiaz;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,10 +13,15 @@ public class RouteModel {
     private long fin;
     private float distancia; // en metros
     private long duracion; // en
+    private double latitud;
+    private double longitud;
+
 
     public RouteModel() {
         // Constructor vacío necesario para Firebase
+        this.ubicaciones = new ArrayList<>();
     }
+
 
     // Getters y setters
     public String getNombre() {
@@ -66,4 +72,19 @@ public class RouteModel {
         this.ubicaciones = ubicaciones;
     }
 
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
 }

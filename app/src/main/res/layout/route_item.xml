@@ -29,6 +29,21 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:text="Duración: 0 min" />
+    <TextView
+        android:id="@+id/routeLat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Latitud: " />
+
+    <TextView
+        android:id="@+id/routeLng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Longitud: " />
+
+
 
     <!-- Añade otros elementos que necesites mostrar por cada ruta -->
 

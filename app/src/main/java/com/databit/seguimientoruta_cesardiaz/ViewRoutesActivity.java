@@ -35,17 +35,24 @@ public class ViewRoutesActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("rutas");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
+            // Dentro de onDataChange en ViewRoutesActivity
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 routeList.clear();
                 for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
                     RouteModel route = routeSnapshot.getValue(RouteModel.class);
-                    if (route != null) {
+                    if (route != null && route.getUbicaciones() != null && !route.getUbicaciones().isEmpty()) {
+                        // Añade la latitud y longitud de la primera ubicación de la lista
+                        FirebaseLatLng firstLocation = route.getUbicaciones().get(0);
+                        route.setLatitud(firstLocation.latitude);
+                        route.setLongitud(firstLocation.longitude);
                         routeList.add(route);
                     }
                 }
                 routeAdapter.notifyDataSetChanged();
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
