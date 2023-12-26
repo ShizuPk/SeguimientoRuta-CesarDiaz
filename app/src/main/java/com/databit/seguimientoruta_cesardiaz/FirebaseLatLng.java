@@ -6,11 +6,11 @@ public class FirebaseLatLng {
     public double latitude;
     public double longitude;
 
-    // Constructor sin argumentos requerido para Firebase
+
     public FirebaseLatLng() {
     }
 
-    // Constructor para tus propios usos
+
     public FirebaseLatLng(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

@@ -58,7 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             finish();
                         } else {
-                            // Si falla el registro, muestra un mensaje al usuario.
                             Toast.makeText(RegisterActivity.this, "Error al registrarse", Toast.LENGTH_SHORT).show();
                         }
                     }
