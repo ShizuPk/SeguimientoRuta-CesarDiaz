@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
 
                         startActivity(new Intent(MainActivity.this, MenuActivity.class));
-                        finish(); // Opcional: cerrar la actividad actual
+                        finish();
                     } else {
                         Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                     }
