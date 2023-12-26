@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
 
 
-                            // Ir a la actividad de inicio de sesión
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             finish();
                         } else {
