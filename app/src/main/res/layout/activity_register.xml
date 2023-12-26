@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/activity_register.xml -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/black"
+    tools:context=".RegisterActivity">
+
+    <EditText
+        android:id="@+id/registerUsernameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Correo Electrónico"
+        android:singleLine="true"
+        android:textColorHint="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/registerPasswordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:singleLine="true"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"
+        android:layout_below="@id/registerUsernameEditText"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrar"
+        android:backgroundTint="#008000"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_below="@id/registerPasswordEditText"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:id="@+id/loginLinkTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Ya tienes una cuenta? Inicia sesión aquí"
+        android:layout_below="@id/registerButton"
+        android:layout_marginTop="16dp"
+        android:onClick="goToLogin"
+        android:clickable="true"
+        android:textColor="#FFD700"/>
+
+</RelativeLayout>
